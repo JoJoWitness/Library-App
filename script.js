@@ -3,10 +3,7 @@ const containerMain = document.getElementById('containerMain');
 const placeHolder = document.createElement('div')
 const bookshelf= document.getElementById('bookshelf')
 let blankDiv = document.createElement('div')
-let pages = "";
-let bookName="";
-let author ="";
-let statusOfReading="";
+
 
 const popUpWindow = document.createRange().createContextualFragment(`
 <div id="inputWindow">
@@ -65,7 +62,47 @@ class Book{
         this.pages = pages;
         this.statusOfReading = statusOfReading
     }
+
+    createBook(){
+        let newBook = document.createRange().createContextualFragment(`
+        <div class="book">
+            <img src="images/close(600wg).svg" id="removeBook">
+            <h3 id="title"></h3>
+            <h4 id="author"></h4>
+            <h5 id="numpages"></h5>
+            <h5 id="read"></h5>
+        </div>`)
+    
+        bookshelf.prepend(newBook);
+       
+        this.title = document.getElementById('title');
+        this.authorName = document.getElementById('author');
+        this.numpages = document.getElementById('numpages');
+        this.read = document.getElementById('read');
+    
+        this.title.textContent = `${bookName}`;
+        this.authorName.textContent=`${author}`;
+        this.numpages.textContent=`${pages} pages`;
+        this.read.textContent=`${statusOfReading}`;
+    
+        const removeBook = document.getElementById('removeBook')
+        removeBook.addEventListener('click', (e) =>{
+            e.target.parentElement.remove()
+        })
+    }
+
 }
+function takeValue(){
+    pages = document.getElementById('numPages').value;
+    bookName = document.getElementById('bookName').value;
+    author = document.getElementById('bookAuthor').value;
+    statusOfReading = document.querySelector('input[name="read"]:checked').value;
+    containerMain.removeChild(blankDiv)
+    let book = new Book(pages, bookName, author, statusOfReading);
+    book.createBook()
+}
+
+
 
 function showPopUp(){
     
@@ -75,44 +112,12 @@ function showPopUp(){
     let closeButton = document.getElementById('close');
     closeButton.addEventListener('click', closePopUp);
     let submitButton = document.getElementById('submitButton');
-    submitButton.addEventListener('click', createBook)
+    submitButton.addEventListener('click', takeValue)
    
 }
 
 
-function createBook(e){
-    pages = document.getElementById('numPages').value;
-    bookName = document.getElementById('bookName').value;
-    author = document.getElementById('bookAuthor').value;
-    statusOfReading = document.querySelector('input[name="read"]:checked').value;
-    containerMain.removeChild(blankDiv)
 
-    let newBook = document.createRange().createContextualFragment(`
-    <div class="book">
-        <img src="images/close(600wg).svg" id="removeBook">
-        <h3 id="title"></h3>
-        <h4 id="author"></h4>
-        <h5 id="numpages"></h5>
-        <h5 id="read"></h5>
-    </div>`)
-
-    bookshelf.prepend(newBook);
-   
-    title = document.getElementById('title');
-    authorName = document.getElementById('author');
-    numpages = document.getElementById('numpages');
-    read = document.getElementById('read');
-
-    title.textContent = `${bookName}`;
-    authorName.textContent=`${author}`;
-    numpages.textContent=`${pages} pages`;
-    read.textContent=`${statusOfReading}`;
-
-    const removeBook = document.getElementById('removeBook')
-    removeBook.addEventListener('click', (e) =>{
-        e.target.parentElement.remove()
-    })
-}
 
 
 addBook.addEventListener('click', showPopUp)
