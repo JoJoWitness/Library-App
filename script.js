@@ -8,7 +8,8 @@ let bookName="";
 let author ="";
 let statusOfReading="";
 
-const popUpWindow = document.createRange().createContextualFragment(`<div id="inputWindow">
+const popUpWindow = document.createRange().createContextualFragment(`
+<div id="inputWindow">
 <div>
     <div id="close"><img src="images/close(600wg).svg"></div>
 </div>
@@ -54,6 +55,16 @@ const popUpWindow = document.createRange().createContextualFragment(`<div id="in
 
 function closePopUp(){
    containerMain.removeChild(blankDiv)
+}
+
+class Book{
+
+    constructor(bookName,author,pages,statusOfReading ){
+        this.bookName= bookName;
+        this.author = author;
+        this.pages = pages;
+        this.statusOfReading = statusOfReading
+    }
 }
 
 function showPopUp(){
